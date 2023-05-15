@@ -1,0 +1,40 @@
+.sneakers {
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 40px;
+  }
+  &__search {
+    position: relative;
+    background: #fff;
+    border: 1px solid #f3f3f3;
+    border-radius: 10px;
+    cursor: pointer;
+    padding-left: 20px;
+
+    &::before {
+      content: '';
+      width: 15px;
+      height: 15px;
+      background: url(../../assets/img/search.svg) no-repeat center/contain;
+
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 10px;
+      margin: auto;
+    }
+    &--field {
+      all: unset;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: inherit;
+      font-size: 14px;
+      color: #000;
+      padding: 15px;
+    }
+  }
+}
