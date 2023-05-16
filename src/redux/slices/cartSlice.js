@@ -5,6 +5,7 @@ const initialState = {
   showCart: false,
   total: 0,
   cartItems: [],
+  orderItems: [],
 };
 
 export const cartSlice = createSlice({
@@ -24,10 +25,16 @@ export const cartSlice = createSlice({
       );
       state.total = getTotal(state.cartItems);
     },
+    setOrderItems: (state) => {
+      state.orderItems = [...state.cartItems];
+      state.cartItems = [];
+      state.total = getTotal(state.cartItems);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setShowCart, setCartItems, removeCartItem } = cartSlice.actions;
+export const { setShowCart, setCartItems, removeCartItem, setOrderItems } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

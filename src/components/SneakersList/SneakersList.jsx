@@ -6,16 +6,18 @@ import { fetchSneakers } from '../../redux/slices/sneakersList';
 import './style.scss';
 
 function SneakersList() {
-  const { sneakersList, status } = useSelector((state) => state.sneakers);
+  const { sneakersList, status, debouncedValue } = useSelector(
+    (state) => state.sneakers
+  );
   const dispatch = useDispatch();
 
   async function fetchData() {
-    dispatch(fetchSneakers());
+    dispatch(fetchSneakers(debouncedValue));
   }
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [debouncedValue]);
 
   return (
     <div className="sneakers__list">

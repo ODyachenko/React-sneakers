@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import empty from '../../assets/img/empty.png';
 import { setShowCart } from '../../redux/slices/cartSlice';
+import Btn from '../Btn/Btn';
 
 function EmptyCart() {
   const dispatch = useDispatch();
@@ -12,9 +13,10 @@ function EmptyCart() {
       <p className="cart__state-text">
         Додайте чоча б одну пару кросівок, щоб зробити замовлення.
       </p>
+      {/* <Btn /> */}
       <button
         onClick={() => dispatch(setShowCart(false))}
-        className="cart__state-btn cart-btn"
+        className="cart__state-btn btn"
       >
         Повернутись назад
       </button>

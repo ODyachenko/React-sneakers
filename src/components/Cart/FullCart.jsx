@@ -1,8 +1,10 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOrderItems } from '../../redux/slices/cartSlice';
 import CartItem from './CartItem';
 
 function FullCart() {
   const { cartItems, total } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -15,7 +17,12 @@ function FullCart() {
         <span className="cart__total-caption">Сума:</span>
         <span className="cart__total-sum">{total} грн.</span>
       </div>
-      <button className="cart__btn cart-btn">Оформить заказ</button>
+      <button
+        onClick={() => dispatch(setOrderItems())}
+        className="cart__btn btn"
+      >
+        Оформить заказ
+      </button>
     </>
   );
 }

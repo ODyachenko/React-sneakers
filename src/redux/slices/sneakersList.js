@@ -1,18 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const URL = 'https://64465b720431e885f00fc24e.mockapi.io/SneakersList';
-
 export const fetchSneakers = createAsyncThunk(
   'sneakers/fetchSneakers',
-  async function fetchData() {
-    const response = await axios(URL);
+  async function fetchData(debouncedValue) {
+    const response = await axios(
+      `https://64465b720431e885f00fc24e.mockapi.io/SneakersList?${
+        !!debouncedValue ? `search=${debouncedValue}` : ''
+      }`
+    );
     return response.data;
   }
 );
 
 const initialState = {
   sneakersList: [],
+  searchValue: '',
+  debouncedValue: '',
   status: 'pending' | 'fulfilled' | 'rejected',
 };
 
@@ -20,9 +24,12 @@ export const sneakersList = createSlice({
   name: 'sneakers',
   initialState,
   reducers: {
-    // setTotal: (state, action) => {
-    //   state.total += action.payload;
-    // },
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
+    setDebounceValue: (state, action) => {
+      state.debouncedValue = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSneakers.pending, (state) => {
@@ -39,8 +46,6 @@ export const sneakersList = createSlice({
     });
   },
 });
-
-// Action creators are generated for each case reducer function
-// export const { setTotal } = sneakersList.actions;
+export const { setSearchValue, setDebounceValue } = sneakersList.actions;
 
 export default sneakersList.reducer;
