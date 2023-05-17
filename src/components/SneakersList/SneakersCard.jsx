@@ -1,20 +1,25 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCartItems } from '../../redux/slices/cartSlice';
 import { setSavedItems } from '../../redux/slices/savedSlice';
 
 function SneakersCard(props) {
   const { img, name, price } = props;
-  const dispatch = useDispatch();
   const [favorite, setFavorite] = useState(false);
   const [inCart, setInCart] = useState(false);
+  const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   function onClickFavotite() {
     dispatch(setSavedItems(props));
     setFavorite(!favorite);
   }
-  function onClickCardAction() {
-    dispatch(setCartItems(props));
+
+  // Post cart items
+  function onClickAddToCart() {
+    axios.post('https://64465b720431e885f00fc24e.mockapi.io/Cart', props);
+    dispatch(setCartItems([...cartItems, props]));
     setInCart(!inCart);
   }
 
@@ -44,7 +49,7 @@ function SneakersCard(props) {
           <span className="card__price--value">{price} грн.</span>
         </div>
         <span
-          onClick={onClickCardAction}
+          onClick={onClickAddToCart}
           className={`card__action ${inCart ? 'active' : ''}`}
         >
           {inCart ? (
