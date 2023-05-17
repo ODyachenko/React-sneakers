@@ -13,7 +13,7 @@ function Header() {
       <Link to="/" className="header__brand brand">
         <img className="brand__img" src={logo} alt="Logo" />
         <div className="brand__info">
-          <span className="brand__name">REACT SNEAKERS</span>
+          <span className="brand__name">SNEAKERS SHOP</span>
           <span className="brand__slogan">Магазин найкращих кросівок</span>
         </div>
       </Link>
