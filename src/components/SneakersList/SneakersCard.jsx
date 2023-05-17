@@ -1,25 +1,50 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCartItems } from '../../redux/slices/cartSlice';
-import { setSavedItems } from '../../redux/slices/savedSlice';
+import { removeCartItem, setCartItems } from '../../redux/slices/cartSlice';
+import { setSavedItems, removeSavedItem } from '../../redux/slices/savedSlice';
 
 function SneakersCard(props) {
   const { img, name, price } = props;
   const [favorite, setFavorite] = useState(false);
   const [inCart, setInCart] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
+  const { savedItems } = useSelector((state) => state.saved);
   const dispatch = useDispatch();
 
   function onClickFavotite() {
-    dispatch(setSavedItems(props));
+    if (!savedItems.find((item) => item.id === props.id)) {
+      axios.post('https://64465b720431e885f00fc24e.mockapi.io/saved', props);
+      dispatch(setSavedItems([...savedItems, props]));
+    } else {
+      axios
+        .delete(`https://64465b720431e885f00fc24e.mockapi.io/saved/${props.id}`)
+        .catch((err) =>
+          console.error('Can not delete saved item', err.message)
+        );
+
+      dispatch(removeSavedItem(props.id));
+    }
     setFavorite(!favorite);
   }
 
-  // Post cart items
   function onClickAddToCart() {
-    axios.post('https://64465b720431e885f00fc24e.mockapi.io/Cart', props);
-    dispatch(setCartItems([...cartItems, props]));
+    if (!cartItems.find((item) => item.id === props.id)) {
+      axios
+        .post('https://64465b720431e885f00fc24e.mockapi.io/Cart', props)
+        .catch((err) => console.error('Can not post item', err.message));
+
+      dispatch(setCartItems([...cartItems, props]));
+    } else {
+      axios
+        .delete(`https://64465b720431e885f00fc24e.mockapi.io/Cart/${props.id}`)
+        .catch((err) =>
+          console.error('Can not delete inCart item', err.message)
+        );
+
+      dispatch(removeCartItem(props.id));
+    }
+
     setInCart(!inCart);
   }
 

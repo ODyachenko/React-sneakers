@@ -9,17 +9,17 @@ export const savedSlice = createSlice({
   initialState,
   reducers: {
     setSavedItems: (state, action) => {
-      state.savedItems.push(action.payload);
+      state.savedItems = action.payload;
     },
-    // removeCartItem: (state, action) => {
-    //   state.cartItems = state.cartItems.filter(
-    //     (item) => item.id !== action.payload
-    //   );
-    // },
+    removeSavedItem: (state, action) => {
+      state.savedItems = state.savedItems.filter(
+        (item) => item.id !== action.payload
+      );
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setSavedItems } = savedSlice.actions;
+export const { setSavedItems, removeSavedItem } = savedSlice.actions;
 
 export default savedSlice.reducer;
