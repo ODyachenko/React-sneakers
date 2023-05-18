@@ -1,16 +1,8 @@
 .sneakers {
   padding-bottom: 40px;
-
-  &__list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 30px;
-    grid-row-gap: 30px;
-  }
 }
 .card {
-  max-width: 210px;
+  max-width: 250px;
   background: #ffffff;
   border: 1px solid #f3f3f3;
   border-radius: 40px;
@@ -20,8 +12,8 @@
   padding: 30px 25px;
   margin: 0 auto;
 
-  &:hover {
-    box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
+  &:not(:last-child) {
+    margin-bottom: 30px;
   }
 
   &__header {
@@ -113,5 +105,41 @@
     &.active {
       background: linear-gradient(180deg, #89f09c 0%, #3cc755 100%);
     }
+  }
+}
+@media (min-width: 640px) {
+  .sneakers {
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      grid-column-gap: 20px;
+      grid-row-gap: 20px;
+    }
+  }
+  .card {
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+  }
+}
+@media (min-width: 1024px) {
+  .sneakers {
+    &__list {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      grid-column-gap: 30px;
+      grid-row-gap: 30px;
+    }
+  }
+  .card {
+    &:hover {
+      box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+@media (min-width: 1220px) {
+  .card {
+    max-width: 210px;
   }
 }

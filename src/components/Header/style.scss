@@ -1,13 +1,11 @@
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   border-bottom: 1px solid #eaeaea;
   padding: 25px 0;
 
   &__actions {
     display: flex;
     align-items: center;
+    justify-content: center;
 
     &-cart {
       cursor: pointer;
@@ -38,6 +36,8 @@
 .brand {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 
   &__img {
     width: 40px;
@@ -55,6 +55,16 @@
   }
 }
 
+@media (min-width: 640px) {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    margin: 0;
+  }
+}
 @media (min-width: 1024px) {
   .header {
     padding: 40px 0;
