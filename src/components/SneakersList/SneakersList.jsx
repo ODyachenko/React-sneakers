@@ -21,16 +21,13 @@ function SneakersList() {
 
   return (
     <div className="sneakers__list">
-      {/* {status === 'pending'
+      {status === 'pending'
         ? [...new Array(8)].map((_, index) => {
             return <Skeleton key={index} />;
           })
         : sneakersList.map((sneakers) => {
             return <SneakersCard key={sneakers.id} {...sneakers} />;
-          })} */}
-      {[...new Array(8)].map((_, index) => {
-        return <Skeleton key={index} />;
-      })}
+          })}
     </div>
   );
 }
