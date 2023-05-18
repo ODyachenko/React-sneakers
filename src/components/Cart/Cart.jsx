@@ -34,7 +34,7 @@ function Cart() {
             />
           </svg>
         </span>
-        Корзина
+        Кошик
       </h2>
       {!!cartItems.length ? <FullCart /> : <EmptyCart />}
 

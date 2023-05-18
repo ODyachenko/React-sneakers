@@ -1,51 +1,79 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCartItem, setCartItems } from '../../redux/slices/cartSlice';
 import { setSavedItems, removeSavedItem } from '../../redux/slices/savedSlice';
 
 function SneakersCard(props) {
-  const { img, name, price } = props;
+  const { id, img, name, price } = props;
   const [favorite, setFavorite] = useState(false);
   const [inCart, setInCart] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
   const { savedItems } = useSelector((state) => state.saved);
   const dispatch = useDispatch();
 
-  function onClickFavotite() {
-    if (!savedItems.find((item) => item.id === props.id)) {
-      axios.post('https://64465b720431e885f00fc24e.mockapi.io/saved', props);
-      dispatch(setSavedItems([...savedItems, props]));
+  useEffect(() => {
+    if (cartItems.some((item) => item.localId === id)) {
+      setInCart(true);
     } else {
-      axios
-        .delete(`https://64465b720431e885f00fc24e.mockapi.io/saved/${props.id}`)
-        .catch((err) =>
-          console.error('Can not delete saved item', err.message)
+      setInCart(false);
+    }
+
+    if (savedItems.some((item) => item.localId === id)) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+  }, [cartItems, savedItems]);
+
+  async function onClickFavotite() {
+    try {
+      const findItem = savedItems.find((item) => item.localId === props.id);
+      if (findItem) {
+        await axios.delete(
+          `https://64465b720431e885f00fc24e.mockapi.io/saved/${findItem.id}`
         );
 
-      dispatch(removeSavedItem(props.id));
+        dispatch(removeSavedItem(findItem.id));
+      } else {
+        const { data } = await axios.post(
+          `https://64465b720431e885f00fc24e.mockapi.io/saved`,
+          {
+            ...props,
+            localId: props.id,
+          }
+        );
+        dispatch(setSavedItems([...savedItems, data]));
+      }
+      setFavorite(!favorite);
+    } catch (error) {
+      console.error(error.message);
     }
-    setFavorite(!favorite);
   }
 
-  function onClickAddToCart() {
-    if (!cartItems.find((item) => item.id === props.id)) {
-      axios
-        .post('https://64465b720431e885f00fc24e.mockapi.io/Cart', props)
-        .catch((err) => console.error('Can not post item', err.message));
-
-      dispatch(setCartItems([...cartItems, props]));
-    } else {
-      axios
-        .delete(`https://64465b720431e885f00fc24e.mockapi.io/Cart/${props.id}`)
-        .catch((err) =>
-          console.error('Can not delete inCart item', err.message)
+  async function onClickAddToCart() {
+    try {
+      const findItem = cartItems.find((item) => item.localId === props.id);
+      if (findItem) {
+        await axios.delete(
+          `https://64465b720431e885f00fc24e.mockapi.io/Cart/${findItem.id}`
         );
+        dispatch(removeCartItem(findItem.id));
+      } else {
+        const { data } = await axios.post(
+          'https://64465b720431e885f00fc24e.mockapi.io/Cart',
+          {
+            ...props,
+            localId: props.id,
+          }
+        );
+        dispatch(setCartItems([...cartItems, data]));
+      }
 
-      dispatch(removeCartItem(props.id));
+      setInCart(!inCart);
+    } catch (error) {
+      console.error(error.message);
     }
-
-    setInCart(!inCart);
   }
 
   return (

@@ -21,7 +21,7 @@ function FullCart() {
         onClick={() => dispatch(setOrderItems())}
         className="cart__btn btn"
       >
-        Оформить заказ
+        Оформити замовлення
       </button>
     </>
   );

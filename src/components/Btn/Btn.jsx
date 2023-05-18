@@ -1,7 +1,7 @@
 import './style.scss';
 
 function Btn() {
-  return <button className="btn">Повернутись назад</button>;
+  return <button className="btn">Оформити замовлення</button>;
 }
 
 export default Btn;
