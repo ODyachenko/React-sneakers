@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from 'ahooks';
 import {
@@ -5,7 +6,6 @@ import {
   setSearchValue,
 } from '../../redux/slices/sneakersList';
 import './style.scss';
-import { useEffect } from 'react';
 
 function Search() {
   const { searchValue } = useSelector((state) => state.sneakers);

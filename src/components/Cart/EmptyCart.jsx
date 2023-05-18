@@ -13,7 +13,6 @@ function EmptyCart() {
       <p className="cart__state-text">
         Додайте чоча б одну пару кросівок, щоб зробити замовлення.
       </p>
-      {/* <Btn /> */}
       <button
         onClick={() => dispatch(setShowCart(false))}
         className="cart__state-btn btn"

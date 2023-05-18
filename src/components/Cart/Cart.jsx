@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowCart } from '../../redux/slices/cartSlice';
-import CartOrder from './CartOrder';
+// import CartOrder from './CartOrder';
 import EmptyCart from './EmptyCart';
 import FullCart from './FullCart';
 import './style.scss';

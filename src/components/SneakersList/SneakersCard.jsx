@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import { removeCartItem, setCartItems } from '../../redux/slices/cartSlice';
 import { setSavedItems, removeSavedItem } from '../../redux/slices/savedSlice';
 
